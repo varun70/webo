@@ -1,0 +1,297 @@
+{
+  "references": [
+    {
+      "name": "OWASP WSTG Latest",
+      "url": "https://owasp.org/www-project-web-security-testing-guide/latest/",
+      "summary": "Web Security Testing Guide methodology and test case structure."
+    },
+    {
+      "name": "OWASP ASVS",
+      "url": "https://owasp.org/www-project-application-security-verification-standard/",
+      "summary": "Application Security Verification Standard requirements for web apps and APIs."
+    },
+    {
+      "name": "OWASP Top 10 2025",
+      "url": "https://owasp.org/www-project-top-ten/",
+      "summary": "Current released OWASP Top 10 web application risk categories."
+    }
+  ],
+  "phases": [
+    {
+      "id": "scope",
+      "title": "Scope and Rules",
+      "objective": "Confirm written authorization, target boundaries, test windows, accounts, rate limits, and emergency contacts before any active testing.",
+      "tasks": [
+        "Save authorization, scope, exclusions, and testing window.",
+        "List allowed domains, IP ranges, API base URLs, mobile apps, and third-party services.",
+        "Confirm whether authenticated testing, social engineering, denial-of-service testing, and destructive checks are excluded.",
+        "Create an evidence folder with timestamps, screenshots, request IDs, and command output."
+      ],
+      "evidence": [
+        "Signed approval or ticket number",
+        "Scope table",
+        "Testing window",
+        "Emergency stop contact"
+      ],
+      "commands": [
+        "mkdir -p assessment/{notes,evidence,scans,reports}",
+        "date -u | tee assessment/notes/start-time.txt"
+      ],
+      "refs": ["OWASP WSTG Latest", "OWASP ASVS"]
+    },
+    {
+      "id": "map",
+      "title": "Map the Application",
+      "objective": "Build a clean inventory of routes, technologies, roles, authentication flows, input points, files, and APIs.",
+      "tasks": [
+        "Browse the application manually as each approved role and record major workflows.",
+        "Capture sitemap data with a proxy such as ZAP or Burp on an authorized test account.",
+        "Fingerprint server, framework, headers, cookies, TLS posture, and exposed metadata.",
+        "Separate public, authenticated, administrative, and API attack surfaces."
+      ],
+      "evidence": [
+        "Sitemap export",
+        "Role matrix",
+        "Header and cookie capture",
+        "Technology notes"
+      ],
+      "commands": [
+        "curl -I -L https://target.example",
+        "whatweb https://target.example",
+        "nmap -sV -T3 --top-ports 100 target.example"
+      ],
+      "refs": ["OWASP WSTG Latest"]
+    },
+    {
+      "id": "auth",
+      "title": "Auth and Session",
+      "objective": "Check identity, password reset, MFA, session lifetime, cookie flags, logout behavior, and account recovery controls.",
+      "tasks": [
+        "Verify login, logout, password reset, account recovery, and MFA flows for approved accounts.",
+        "Check cookie flags, session rotation after login, and invalidation after logout or password change.",
+        "Confirm lockout, throttling, and user enumeration behavior without brute force.",
+        "Record all account and role combinations used during testing."
+      ],
+      "evidence": [
+        "Screenshots of security settings",
+        "Set-Cookie headers",
+        "Session rotation notes",
+        "User enumeration observations"
+      ],
+      "commands": [
+        "curl -I -L https://target.example/login",
+        "grep -i \"set-cookie\\|strict-transport\\|content-security\" headers.txt"
+      ],
+      "refs": ["OWASP ASVS", "OWASP Top 10 2025"]
+    },
+    {
+      "id": "access-control",
+      "title": "Access Control",
+      "objective": "Verify that users cannot access another role's data, actions, direct object references, or administrative paths.",
+      "tasks": [
+        "Create a role matrix for every approved test account.",
+        "Replay authorized requests across lower-privilege roles and confirm server-side denial.",
+        "Check object IDs, account IDs, organization IDs, and tenant IDs for missing authorization checks.",
+        "Capture both the allowed request and the denied request as evidence."
+      ],
+      "evidence": [
+        "Role matrix",
+        "Allowed and denied request pairs",
+        "Object ownership notes",
+        "Server-side response codes"
+      ],
+      "commands": [
+        "jq '.paths | keys' openapi.json",
+        "curl -H \"Authorization: Bearer <low_priv_token>\" https://target.example/api/me"
+      ],
+      "refs": ["OWASP ASVS", "OWASP Top 10 2025"]
+    },
+    {
+      "id": "input-validation",
+      "title": "Input and Injection",
+      "objective": "Review input handling for injection, validation gaps, reflected output, file parsing, command execution, and unsafe deserialization.",
+      "tasks": [
+        "Map every parameter, header, file upload field, JSON field, and GraphQL variable.",
+        "Use non-destructive scanner checks first and confirm findings with minimal safe proof.",
+        "Look for stack traces, database errors, template errors, unexpected redirects, and reflected output.",
+        "Document validation rules and remediation without publishing dangerous payloads."
+      ],
+      "evidence": [
+        "Parameter inventory",
+        "Scanner findings",
+        "Before and after requests",
+        "Server error samples"
+      ],
+      "commands": [
+        "zap-baseline.py -t https://target.example -r zap-baseline.html",
+        "nuclei -u https://target.example -severity low,medium,high,critical -rl 5 -o nuclei.txt"
+      ],
+      "refs": ["OWASP WSTG Latest", "OWASP Top 10 2025"]
+    },
+    {
+      "id": "api",
+      "title": "API and Data Flow",
+      "objective": "Assess API authentication, authorization, schemas, rate limits, errors, CORS, sensitive data exposure, and mass assignment risk.",
+      "tasks": [
+        "Collect OpenAPI, GraphQL schema, Postman collections, and mobile/API endpoints if authorized.",
+        "Check each method for authentication, authorization, input validation, and clear error behavior.",
+        "Compare server responses against expected schemas and data minimization rules.",
+        "Verify CORS only allows approved origins and sensitive methods are protected."
+      ],
+      "evidence": [
+        "API inventory",
+        "Schema or collection files",
+        "CORS headers",
+        "Sensitive data examples with redaction"
+      ],
+      "commands": [
+        "curl -i https://target.example/api/health",
+        "jq '.paths' openapi.json > assessment/notes/api-paths.json"
+      ],
+      "refs": ["OWASP ASVS", "OWASP Top 10 2025"]
+    },
+    {
+      "id": "config",
+      "title": "Configuration and Supply Chain",
+      "objective": "Review security headers, TLS, dependency risk, exposed files, CI/CD secrets, container posture, and logging coverage.",
+      "tasks": [
+        "Check security headers and cookie attributes from public and authenticated areas.",
+        "Run dependency, secret, container, and repository scans against approved code or build artifacts.",
+        "Review exposed files such as backups, debug endpoints, source maps, and environment leaks.",
+        "Confirm logs capture security-relevant events without storing secrets."
+      ],
+      "evidence": [
+        "Header report",
+        "Dependency scan output",
+        "Secret scan output",
+        "Logging event list"
+      ],
+      "commands": [
+        "gitleaks detect --source . --redact",
+        "semgrep scan --config auto",
+        "trivy fs --scanners vuln,secret ."
+      ],
+      "refs": ["OWASP ASVS"]
+    },
+    {
+      "id": "report",
+      "title": "Validate and Report",
+      "objective": "Turn verified findings into clear risk statements, proof, impact, remediation, and retest steps.",
+      "tasks": [
+        "Deduplicate scanner results and remove unverified noise.",
+        "Assign severity from impact and likelihood, not tool labels alone.",
+        "Write every finding with affected asset, steps to reproduce, evidence, impact, remediation, and retest guidance.",
+        "Include positive controls and items that were out of scope."
+      ],
+      "evidence": [
+        "Finding table",
+        "Screenshots and request logs",
+        "Risk rationale",
+        "Retest plan"
+      ],
+      "commands": [
+        "tar -czf assessment-evidence.tgz assessment/evidence assessment/scans",
+        "date -u | tee assessment/notes/end-time.txt"
+      ],
+      "refs": ["OWASP WSTG Latest"]
+    }
+  ],
+  "matrix": [
+    {
+      "name": "Broken Access Control",
+      "severity": "Critical",
+      "category": "Authorization",
+      "checks": [
+        "Role matrix covers every protected workflow.",
+        "Direct object references are denied across accounts and tenants.",
+        "Admin-only endpoints reject low-privilege users on the server."
+      ],
+      "tools": ["Proxy replay", "Browser devtools", "API client"],
+      "report": "Show the allowed request, the unauthorized request, expected denial, and actual response."
+    },
+    {
+      "name": "Injection",
+      "severity": "High",
+      "category": "Input Validation",
+      "checks": [
+        "Inputs are mapped across query strings, JSON, forms, headers, and uploads.",
+        "Unexpected errors, reflected output, and unsafe interpreter behavior are investigated safely.",
+        "Scanner findings are manually verified without destructive commands."
+      ],
+      "tools": ["OWASP ZAP", "Nuclei", "Semgrep"],
+      "report": "Include affected parameter, request, response behavior, impact, and safe remediation."
+    },
+    {
+      "name": "Security Misconfiguration",
+      "severity": "High",
+      "category": "Configuration",
+      "checks": [
+        "Debug pages, default credentials, directory listing, backups, and verbose errors are absent.",
+        "Security headers and cookie flags meet the app's risk profile.",
+        "Cloud storage, API gateways, and reverse proxies enforce intended access."
+      ],
+      "tools": ["curl", "Nmap", "ZAP baseline"],
+      "report": "List exposed setting, affected URL, evidence, and exact configuration fix."
+    },
+    {
+      "name": "Vulnerable Components",
+      "severity": "High",
+      "category": "Supply Chain",
+      "checks": [
+        "Lockfiles, containers, and source repositories are scanned.",
+        "Findings are matched to reachable code paths and deployed versions.",
+        "Upgrade, patch, or compensating control is documented."
+      ],
+      "tools": ["Trivy", "OSV-Scanner", "npm audit"],
+      "report": "Tie CVE, package, installed version, fixed version, reachability, and owner."
+    },
+    {
+      "name": "Identification and Authentication Failures",
+      "severity": "High",
+      "category": "Authentication",
+      "checks": [
+        "MFA, recovery, password change, and logout flows are verified.",
+        "Session tokens rotate after login and are invalidated after logout.",
+        "Lockout and throttling work without allowing user enumeration."
+      ],
+      "tools": ["Proxy", "Browser devtools", "curl"],
+      "report": "Include user journey, headers, token behavior, and affected account conditions."
+    },
+    {
+      "name": "Sensitive Data Exposure",
+      "severity": "High",
+      "category": "Data Protection",
+      "checks": [
+        "Responses do not leak tokens, secrets, PII, internal IDs, or stack traces.",
+        "TLS and HSTS are configured for production surfaces.",
+        "Logs and analytics avoid storing credentials or session material."
+      ],
+      "tools": ["curl", "Proxy", "Trivy secret scan"],
+      "report": "Redact sensitive values while proving data type, location, and access path."
+    },
+    {
+      "name": "File Upload Risk",
+      "severity": "Medium",
+      "category": "Input Validation",
+      "checks": [
+        "Uploads enforce allowed file types, size limits, malware scanning, and storage isolation.",
+        "Uploaded content is served with safe content type and no execution.",
+        "Metadata and image processing errors do not leak internals."
+      ],
+      "tools": ["Proxy", "Browser", "Storage console"],
+      "report": "Show upload policy gap, server behavior, storage path exposure, and fix."
+    },
+    {
+      "name": "Logging and Monitoring Gaps",
+      "severity": "Medium",
+      "category": "Detection",
+      "checks": [
+        "Authentication, access control denials, admin actions, and suspicious validation failures are logged.",
+        "Alerts exist for high-risk events and unusual volume.",
+        "Logs are protected from tampering and sensitive data leakage."
+      ],
+      "tools": ["SIEM", "journalctl", "Application logs"],
+      "report": "Show missing event, expected detection, business risk, and logging requirement."
+    }
+  ]
+}

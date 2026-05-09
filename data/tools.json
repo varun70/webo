@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-05-09T18:15:13.537Z",
+  "checkedAt": "2026-05-09T18:40:15.226Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -179,6 +179,66 @@
         "stripPrefix": "v",
         "url": "https://github.com/wazuh/wazuh",
         "releaseUrl": "https://github.com/wazuh/wazuh/releases/tag/v4.14.5"
+      }
+    },
+    {
+      "name": "httpx",
+      "category": "Web Testing",
+      "version": "1.9.0",
+      "publishedAt": "2026-03-09T21:21:52Z",
+      "summary": "Fast HTTP toolkit for probing approved hosts, collecting status codes, titles, technologies, and response metadata.",
+      "install": "httpx -l hosts.txt -title -tech-detect -status-code",
+      "source": {
+        "type": "github",
+        "repo": "projectdiscovery/httpx",
+        "stripPrefix": "v",
+        "url": "https://github.com/projectdiscovery/httpx",
+        "releaseUrl": "https://github.com/projectdiscovery/httpx/releases/tag/v1.9.0"
+      }
+    },
+    {
+      "name": "Amass",
+      "category": "Asset Discovery",
+      "version": "5.1.1",
+      "publishedAt": "2026-04-07T02:08:08Z",
+      "summary": "Attack surface mapping and DNS enumeration framework for approved domains and asset inventories.",
+      "install": "amass enum -passive -d example.com -o amass.txt",
+      "source": {
+        "type": "github",
+        "repo": "owasp-amass/amass",
+        "stripPrefix": "v",
+        "url": "https://github.com/owasp-amass/amass",
+        "releaseUrl": "https://github.com/owasp-amass/amass/releases/tag/v5.1.1"
+      }
+    },
+    {
+      "name": "Nikto",
+      "category": "Web Testing",
+      "version": "2.6.0",
+      "publishedAt": "2026-02-11T22:01:29Z",
+      "summary": "Web server checks for known risky files, configuration issues, and outdated server components in authorized assessments.",
+      "install": "nikto -h https://target.example -output nikto.txt",
+      "source": {
+        "type": "github",
+        "repo": "sullo/nikto",
+        "stripPrefix": "",
+        "url": "https://github.com/sullo/nikto",
+        "releaseUrl": "https://github.com/sullo/nikto/releases/tag/2.6.0"
+      }
+    },
+    {
+      "name": "Katana",
+      "category": "Web Testing",
+      "version": "1.6.1",
+      "publishedAt": "2026-05-05T15:31:34Z",
+      "summary": "Crawler for mapping URLs, forms, JavaScript links, and web app routes during approved reconnaissance.",
+      "install": "katana -u https://target.example -d 2 -o katana.txt",
+      "source": {
+        "type": "github",
+        "repo": "projectdiscovery/katana",
+        "stripPrefix": "v",
+        "url": "https://github.com/projectdiscovery/katana",
+        "releaseUrl": "https://github.com/projectdiscovery/katana/releases/tag/v1.6.1"
       }
     }
   ]

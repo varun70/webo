@@ -71,5 +71,60 @@
       "sudo ss -tulpn",
       "sudo ps aux --sort=-%cpu | head"
     ]
+  },
+  {
+    "id": "authorized-web-assessment-flow",
+    "title": "A Practical Web Vulnerability Assessment Flow",
+    "category": "Web Testing",
+    "date": "2026-05-10",
+    "readTime": "9 min",
+    "excerpt": "A start-to-finish assessment path for scope, mapping, passive scanning, validation, evidence, and reporting.",
+    "body": [
+      "A useful vulnerability assessment begins before tools run. Confirm written authorization, approved targets, time window, rate limits, accounts, and exclusions.",
+      "Map the application manually first. Record roles, key workflows, API endpoints, forms, file uploads, redirects, cookies, and security headers before trusting scanner output.",
+      "Run passive and low-risk automated checks in an approved window, then manually validate only the findings that matter. A good report explains impact, evidence, and remediation in language an owner can act on."
+    ],
+    "commands": [
+      "mkdir -p assessment/{notes,evidence,scans,reports}",
+      "curl -I -L https://target.example",
+      "zap-baseline.py -t https://target.example -r assessment/scans/zap-baseline.html",
+      "nuclei -u https://target.example -severity low,medium,high,critical -rl 5 -o assessment/scans/nuclei.txt"
+    ]
+  },
+  {
+    "id": "web-hacking-playbook-notes",
+    "title": "Web Hacking Playbook for Legal Labs",
+    "category": "Web Testing",
+    "date": "2026-05-10",
+    "readTime": "10 min",
+    "excerpt": "What to check in authentication, access control, APIs, input validation, configuration, and reporting.",
+    "body": [
+      "Treat web testing like a controlled experiment. For every suspected bug, capture the starting account, exact request, exact response, expected behavior, and business impact.",
+      "Access control testing is usually the highest-value area. Build a role matrix, then compare what each user can see and change across accounts, organizations, tenants, and admin functions.",
+      "Input validation testing should avoid destructive payloads. Start with scanner findings, safe test cases, and logs from the staging environment so the proof is clear without harming data."
+    ],
+    "commands": [
+      "jq '.paths | keys' openapi.json",
+      "curl -i https://target.example/api/health",
+      "semgrep scan --config auto"
+    ]
+  },
+  {
+    "id": "writing-findings-that-get-fixed",
+    "title": "Writing Findings That Actually Get Fixed",
+    "category": "Reporting",
+    "date": "2026-05-10",
+    "readTime": "6 min",
+    "excerpt": "A clean finding template for severity, affected asset, evidence, impact, remediation, and retest.",
+    "body": [
+      "A finding is not just a bug title. It should name the affected asset, explain who can trigger the issue, show the evidence, and describe what could happen in realistic business terms.",
+      "Severity should combine impact and likelihood. Tool output is a starting point, not the final risk rating.",
+      "Close the loop with remediation and retest steps. A developer should understand the control that failed and the exact condition that proves it is fixed."
+    ],
+    "commands": [
+      "Title: Broken access control exposes another user's invoice",
+      "Evidence: request ID, affected endpoint, two test accounts, timestamp",
+      "Fix: enforce server-side ownership checks before returning object data"
+    ]
   }
 ]

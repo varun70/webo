@@ -3,6 +3,9 @@
 A GitHub Pages-ready cybersecurity blog with:
 
 - Editable blog posts in `data/posts.json`
+- Editable web testing playbooks in `data/playbooks.json`
+- A saved-progress checklist for authorized vulnerability assessments
+- A Markdown runbook generator for assessment planning
 - An interactive Linux command terminal section
 - A searchable security tools tracker in `data/tools.json`
 - A Node updater for GitHub release versions
@@ -35,6 +38,10 @@ Edit `data/posts.json` and add another object:
 }
 ```
 
+## Edit the Playbook
+
+Edit `data/playbooks.json` to add phases, checklist tasks, evidence items, commands, references, or vulnerability matrix cards. The checklist progress is saved in the browser with `localStorage`, so the site still works as a static GitHub Pages project.
+
 ## Update Tool Versions
 
 Run:
@@ -56,4 +63,4 @@ The `.nojekyll` file is included because this is a plain static site.
 
 ## Version Data Sources
 
-Initial tool versions were checked against official GitHub release data on 2026-05-09.
+Tool versions are refreshed from official GitHub release data when `scripts/update-tools.mjs` runs. The web testing playbook references OWASP WSTG, OWASP ASVS, and the current OWASP Top 10 project pages.

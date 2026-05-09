@@ -1,10 +1,13 @@
 const state = {
   posts: [],
   tools: [],
+  playbook: { references: [], phases: [], matrix: [] },
   postCategory: "All",
   toolCategory: "All",
   postSearch: "",
   toolSearch: "",
+  matrixSearch: "",
+  activePhase: "",
   commandIndex: 0,
   typeTimer: null
 };
@@ -33,6 +36,12 @@ const fallbackPosts = [
 const fallbackTools = {
   checkedAt: "2026-05-09T18:11:49Z",
   tools: []
+};
+
+const fallbackPlaybook = {
+  references: [],
+  phases: [],
+  matrix: []
 };
 
 const commandDeck = [
@@ -81,6 +90,37 @@ const commandDeck = [
     ]
   },
   {
+    label: "Header review",
+    command: "curl -I -L https://target.example",
+    output: [
+      "HTTP/2 200",
+      "strict-transport-security: max-age=31536000; includeSubDomains",
+      "content-security-policy: default-src 'self'",
+      "x-content-type-options: nosniff",
+      "Record missing or weak headers with affected URL and risk."
+    ]
+  },
+  {
+    label: "ZAP baseline",
+    command: "zap-baseline.py -t https://target.example -r zap-baseline.html",
+    output: [
+      "Running passive baseline scan against approved target",
+      "WARN: Missing Anti-clickjacking Header",
+      "WARN: Cookie without SameSite Attribute",
+      "Report saved to zap-baseline.html"
+    ]
+  },
+  {
+    label: "Nuclei check",
+    command: "nuclei -u https://target.example -severity low,medium,high,critical -rl 5",
+    output: [
+      "Templates loaded for non-destructive checks",
+      "[medium] tech-detect on https://target.example",
+      "[low] missing-security-header on https://target.example",
+      "Validate scanner output before reporting."
+    ]
+  },
+  {
     label: "Log review",
     command: "sudo journalctl -p warning --since \"1 hour ago\"",
     output: [
@@ -102,6 +142,7 @@ const commandDeck = [
 ];
 
 const $ = (selector) => document.querySelector(selector);
+const playbookStorageKey = "cybersec-playbook-progress-v1";
 
 async function loadJson(path, fallback) {
   try {
@@ -136,6 +177,304 @@ function makeButton(label, active, onClick) {
   button.textContent = label;
   button.addEventListener("click", onClick);
   return button;
+}
+
+function safeStorageRead(key, fallback = {}) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) || fallback;
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function safeStorageWrite(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.warn(error);
+  }
+}
+
+function taskKey(phaseId, index) {
+  return `${phaseId}:${index}`;
+}
+
+function getPlaybookProgress() {
+  return safeStorageRead(playbookStorageKey, {});
+}
+
+function setTaskComplete(phaseId, index, complete) {
+  const progress = getPlaybookProgress();
+  progress[taskKey(phaseId, index)] = complete;
+  safeStorageWrite(playbookStorageKey, progress);
+  renderPlaybookProgress();
+  renderPhaseList();
+}
+
+function countPlaybookTasks() {
+  return state.playbook.phases.reduce((total, phase) => total + phase.tasks.length, 0);
+}
+
+function countCompletedTasks() {
+  const progress = getPlaybookProgress();
+  return state.playbook.phases.reduce((total, phase) => {
+    const completed = phase.tasks.filter((_, index) => progress[taskKey(phase.id, index)]).length;
+    return total + completed;
+  }, 0);
+}
+
+function renderPlaybookProgress() {
+  const total = countPlaybookTasks();
+  const complete = countCompletedTasks();
+  const percent = total ? Math.round((complete / total) * 100) : 0;
+  $("#playbookProgressText").textContent = `${percent}% complete (${complete}/${total})`;
+  $("#playbookProgressBar").style.width = `${percent}%`;
+}
+
+function renderReferences() {
+  const row = $("#referenceRow");
+  row.replaceChildren(...state.playbook.references.map((reference) => {
+    const link = document.createElement("a");
+    link.className = "reference-chip";
+    link.href = reference.url;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.innerHTML = `<i data-lucide="external-link"></i><span></span>`;
+    link.querySelector("span").textContent = reference.name;
+    return link;
+  }));
+}
+
+function renderPhaseList() {
+  const list = $("#phaseList");
+  const progress = getPlaybookProgress();
+  list.replaceChildren(...state.playbook.phases.map((phase) => {
+    const complete = phase.tasks.filter((_, index) => progress[taskKey(phase.id, index)]).length;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `phase-button${phase.id === state.activePhase ? " active" : ""}`;
+    button.setAttribute("role", "tab");
+    button.setAttribute("aria-selected", phase.id === state.activePhase ? "true" : "false");
+
+    const title = document.createElement("span");
+    title.textContent = phase.title;
+    const small = document.createElement("small");
+    small.textContent = `${complete}/${phase.tasks.length} tasks`;
+    button.append(title, small);
+
+    button.addEventListener("click", () => {
+      state.activePhase = phase.id;
+      renderPhaseList();
+      renderPhaseDetail();
+    });
+    return button;
+  }));
+}
+
+function renderPhaseDetail() {
+  const phase = state.playbook.phases.find((item) => item.id === state.activePhase) || state.playbook.phases[0];
+  const detail = $("#phaseDetail");
+  detail.replaceChildren();
+  if (!phase) return;
+
+  const eyebrow = document.createElement("span");
+  eyebrow.className = "tag";
+  eyebrow.textContent = "Playbook phase";
+
+  const title = document.createElement("h3");
+  title.textContent = phase.title;
+
+  const objective = document.createElement("p");
+  objective.className = "phase-objective";
+  objective.textContent = phase.objective;
+
+  const tasksTitle = document.createElement("h4");
+  tasksTitle.textContent = "Checklist";
+  const checklist = document.createElement("div");
+  checklist.className = "checklist";
+  const progress = getPlaybookProgress();
+
+  phase.tasks.forEach((task, index) => {
+    const label = document.createElement("label");
+    label.className = "check-item";
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = Boolean(progress[taskKey(phase.id, index)]);
+    input.addEventListener("change", () => setTaskComplete(phase.id, index, input.checked));
+    const span = document.createElement("span");
+    span.textContent = task;
+    label.append(input, span);
+    checklist.append(label);
+  });
+
+  const evidenceTitle = document.createElement("h4");
+  evidenceTitle.textContent = "Evidence to collect";
+  const evidence = document.createElement("ul");
+  evidence.className = "compact-list";
+  phase.evidence.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    evidence.append(li);
+  });
+
+  const commandTitle = document.createElement("h4");
+  commandTitle.textContent = "Safe starter commands";
+  const commands = document.createElement("pre");
+  commands.className = "phase-command";
+  commands.textContent = phase.commands.map((command) => `$ ${command}`).join("\n");
+
+  const refs = document.createElement("div");
+  refs.className = "phase-refs";
+  phase.refs.forEach((ref) => {
+    const chip = document.createElement("span");
+    chip.className = "tag";
+    chip.textContent = ref;
+    refs.append(chip);
+  });
+
+  detail.append(eyebrow, title, objective, tasksTitle, checklist, evidenceTitle, evidence, commandTitle, commands, refs);
+}
+
+function filteredMatrix() {
+  const query = state.matrixSearch.trim().toLowerCase();
+  return state.playbook.matrix.filter((item) => {
+    const haystack = `${item.name} ${item.severity} ${item.category} ${item.checks.join(" ")} ${item.tools.join(" ")}`.toLowerCase();
+    return !query || haystack.includes(query);
+  });
+}
+
+function renderMatrix() {
+  const grid = $("#matrixGrid");
+  const items = filteredMatrix();
+  grid.replaceChildren();
+
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "section-note";
+    empty.textContent = "No checks match that search.";
+    grid.append(empty);
+    return;
+  }
+
+  items.forEach((item) => {
+    const card = document.createElement("article");
+    card.className = "matrix-card";
+
+    const top = document.createElement("div");
+    top.className = "matrix-card-top";
+    const title = document.createElement("h3");
+    title.textContent = item.name;
+    const severity = document.createElement("span");
+    severity.className = `severity ${item.severity.toLowerCase()}`;
+    severity.textContent = item.severity;
+    top.append(title, severity);
+
+    const category = document.createElement("span");
+    category.className = "tag";
+    category.textContent = item.category;
+
+    const checks = document.createElement("ul");
+    checks.className = "compact-list";
+    item.checks.forEach((check) => {
+      const li = document.createElement("li");
+      li.textContent = check;
+      checks.append(li);
+    });
+
+    const tools = document.createElement("p");
+    tools.className = "matrix-tools-line";
+    tools.textContent = `Tools: ${item.tools.join(", ")}`;
+
+    const report = document.createElement("p");
+    report.textContent = item.report;
+
+    card.append(top, category, checks, tools, report);
+    grid.append(card);
+  });
+}
+
+function extractHost(url) {
+  try {
+    return new URL(url).hostname || "target.example";
+  } catch (error) {
+    return "target.example";
+  }
+}
+
+function generateRunbookMarkdown() {
+  const project = $("#projectName").value.trim() || "Web App Assessment";
+  const target = $("#targetUrl").value.trim() || "https://target.example";
+  const host = extractHost(target);
+  const appType = $("#appType").value;
+  const depth = $("#testDepth").value;
+  const authorized = $("#authorizedCheck").checked;
+
+  if (!authorized) {
+    return [
+      "# Scope confirmation required",
+      "",
+      "Check the authorization box before generating active testing steps.",
+      "Use this runbook only for systems you own, labs, or client-approved scopes."
+    ].join("\n");
+  }
+
+  const phaseLines = state.playbook.phases.map((phase) => {
+    const tasks = phase.tasks.map((task) => `- [ ] ${task}`).join("\n");
+    return `## ${phase.title}\n${phase.objective}\n\n${tasks}`;
+  }).join("\n\n");
+
+  return [
+    `# ${project}`,
+    "",
+    `Target: ${target}`,
+    `Host: ${host}`,
+    `Type: ${appType}`,
+    `Depth: ${depth}`,
+    `Generated: ${new Date().toISOString()}`,
+    "",
+    "## Scope Gate",
+    "- Written authorization saved",
+    "- Scope, exclusions, test window, accounts, and emergency contact confirmed",
+    "- Active testing rate limits agreed",
+    "",
+    "## Starter Commands",
+    "```bash",
+    "mkdir -p assessment/{notes,evidence,scans,reports}",
+    `curl -I -L ${target}`,
+    `nmap -sV -T3 --top-ports 100 ${host}`,
+    `zap-baseline.py -t ${target} -r assessment/scans/zap-baseline.html`,
+    `nuclei -u ${target} -severity low,medium,high,critical -rl 5 -o assessment/scans/nuclei.txt`,
+    "gitleaks detect --source . --redact",
+    "semgrep scan --config auto",
+    "trivy fs --scanners vuln,secret .",
+    "```",
+    "",
+    phaseLines,
+    "",
+    "## Report Template",
+    "- Title:",
+    "- Severity and rationale:",
+    "- Affected asset:",
+    "- Evidence:",
+    "- Impact:",
+    "- Recommended fix:",
+    "- Retest steps:"
+  ].join("\n");
+}
+
+function updateRunbookOutput() {
+  $("#runbookOutput").textContent = generateRunbookMarkdown();
+}
+
+function copyRunbook() {
+  const text = $("#runbookOutput").textContent || generateRunbookMarkdown();
+  navigator.clipboard?.writeText(text);
+  const label = $("#copyRunbook span");
+  const previous = label.textContent;
+  label.textContent = "Copied";
+  window.setTimeout(() => {
+    label.textContent = previous;
+  }, 1200);
 }
 
 function renderPostFilters() {
@@ -394,15 +733,19 @@ function initTheme() {
 async function init() {
   initTheme();
 
-  const [posts, toolsPayload] = await Promise.all([
+  const [posts, toolsPayload, playbook] = await Promise.all([
     loadJson("data/posts.json", fallbackPosts),
-    loadJson("data/tools.json", fallbackTools)
+    loadJson("data/tools.json", fallbackTools),
+    loadJson("data/playbooks.json", fallbackPlaybook)
   ]);
 
   state.posts = posts;
   state.tools = toolsPayload.tools || [];
+  state.playbook = playbook;
+  state.activePhase = state.playbook.phases[0]?.id || "";
   $("#postCountMetric").textContent = state.posts.length;
   $("#toolCountMetric").textContent = state.tools.length;
+  $("#phaseCountMetric").textContent = state.playbook.phases.length;
   $("#toolsCheckedAt").textContent = `Version data checked ${formatDate(toolsPayload.checkedAt)}.`;
 
   $("#postSearch").addEventListener("input", (event) => {
@@ -416,10 +759,32 @@ async function init() {
     renderTools();
   });
 
+  $("#matrixSearch").addEventListener("input", (event) => {
+    state.matrixSearch = event.target.value;
+    renderMatrix();
+  });
+
+  $("#assessmentForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    updateRunbookOutput();
+  });
+
+  ["projectName", "targetUrl", "appType", "testDepth", "authorizedCheck"].forEach((id) => {
+    $(`#${id}`).addEventListener("input", updateRunbookOutput);
+    $(`#${id}`).addEventListener("change", updateRunbookOutput);
+  });
+
+  $("#copyRunbook").addEventListener("click", copyRunbook);
   $("#replayTerminal").addEventListener("click", playTerminal);
   $("#copyCommand").addEventListener("click", copyCurrentCommand);
   $("#nextCommand").addEventListener("click", nextCommand);
 
+  renderReferences();
+  renderPlaybookProgress();
+  renderPhaseList();
+  renderPhaseDetail();
+  renderMatrix();
+  updateRunbookOutput();
   renderPostFilters();
   renderPosts();
   renderToolFilters();

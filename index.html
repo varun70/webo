@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A GitHub Pages-ready cybersecurity blog with Linux command demos and an updateable security tools tracker.">
+    <meta name="description" content="A GitHub Pages-ready cybersecurity workspace with blog posts, web testing playbooks, Linux command demos, vulnerability assessment guidance, and an updateable tools tracker.">
     <title>CyberSec Field Notes</title>
     <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="preconnect" href="https://unpkg.com">
@@ -19,9 +19,10 @@
       </a>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#blog">Blog</a>
+        <a href="#playbook">Playbook</a>
+        <a href="#assessment">Assess</a>
         <a href="#terminal">Terminal</a>
         <a href="#tools">Tools</a>
-        <a href="#publish">Publish</a>
       </nav>
       <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme">
         <i data-lucide="moon"></i>
@@ -37,14 +38,14 @@
         >
         <div class="hero-shade" aria-hidden="true"></div>
         <div class="hero-content">
-          <p class="eyebrow">Defensive labs, field notes, and tool watch</p>
+          <p class="eyebrow">Authorized testing, field notes, and tool watch</p>
           <h1 id="heroTitle">CyberSec Field Notes</h1>
           <p class="hero-copy">
-            A practical security blog for writeups, Linux command practice, and a live-style tracker for the tools you use in audits, hardening, and application security.
+            A practical workspace for vulnerability assessment, web application testing playbooks, Linux command practice, writeups, and a live-style tracker for security tools.
           </p>
           <div class="hero-actions" aria-label="Hero actions">
             <a class="button primary" href="#blog"><i data-lucide="book-open"></i><span>Read Posts</span></a>
-            <a class="button secondary" href="#terminal"><i data-lucide="terminal"></i><span>Open Terminal</span></a>
+            <a class="button secondary" href="#playbook"><i data-lucide="clipboard-check"></i><span>Open Playbook</span></a>
           </div>
           <dl class="metrics" aria-label="Site metrics">
             <div>
@@ -56,11 +57,98 @@
               <dd>Tracked tools</dd>
             </div>
             <div>
+              <dt id="phaseCountMetric">0</dt>
+              <dd>Playbook phases</dd>
+            </div>
+            <div>
               <dt>Static</dt>
               <dd>GitHub Pages</dd>
             </div>
           </dl>
         </div>
+      </section>
+
+      <section class="content-band playbook-band" id="playbook" aria-labelledby="playbookTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Authorized web testing</p>
+            <h2 id="playbookTitle">Web Hacking Playbook</h2>
+            <p class="section-note">A safe, structured methodology for owned apps, client-approved scopes, labs, and defensive assessments.</p>
+          </div>
+          <div class="progress-panel" aria-label="Playbook progress">
+            <span id="playbookProgressText">0% complete</span>
+            <div class="progress-track"><span id="playbookProgressBar"></span></div>
+          </div>
+        </div>
+        <div class="reference-row" id="referenceRow" aria-label="Methodology references"></div>
+        <div class="playbook-layout">
+          <div class="phase-list" id="phaseList" role="tablist" aria-label="Playbook phases"></div>
+          <article class="phase-detail" id="phaseDetail" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="content-band assessment-band" id="assessment" aria-labelledby="assessmentTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Assessment builder</p>
+            <h2 id="assessmentTitle">Vulnerability Assessment Runbook</h2>
+            <p class="section-note">Generate a scope-aware, copyable Markdown runbook for legal testing windows and report preparation.</p>
+          </div>
+          <button class="icon-text-button" id="copyRunbook" type="button">
+            <i data-lucide="clipboard"></i><span>Copy Markdown</span>
+          </button>
+        </div>
+        <div class="assessment-layout">
+          <form class="planner-form" id="assessmentForm">
+            <label>
+              <span>Project name</span>
+              <input id="projectName" type="text" value="Web App Assessment">
+            </label>
+            <label>
+              <span>Authorized target URL</span>
+              <input id="targetUrl" type="url" placeholder="https://staging.example.com">
+            </label>
+            <label>
+              <span>Application type</span>
+              <select id="appType">
+                <option>Web application</option>
+                <option>REST API</option>
+                <option>GraphQL API</option>
+                <option>Admin portal</option>
+                <option>Cloud-hosted app</option>
+              </select>
+            </label>
+            <label>
+              <span>Testing depth</span>
+              <select id="testDepth">
+                <option>Baseline vulnerability assessment</option>
+                <option>Authenticated web assessment</option>
+                <option>Pre-release AppSec review</option>
+                <option>Retest after fixes</option>
+              </select>
+            </label>
+            <label class="checkbox-line">
+              <input id="authorizedCheck" type="checkbox">
+              <span>I have written authorization and a defined scope.</span>
+            </label>
+            <button class="button primary planner-submit" type="submit">
+              <i data-lucide="file-check-2"></i><span>Generate Runbook</span>
+            </button>
+          </form>
+          <pre class="runbook-output" id="runbookOutput" aria-live="polite"></pre>
+        </div>
+        <div class="matrix-tools">
+          <div>
+            <h3>Vulnerability Check Matrix</h3>
+            <p class="section-note">Search by risk, category, tool, or evidence type.</p>
+          </div>
+          <label class="search-box">
+            <i data-lucide="search"></i>
+            <span class="sr-only">Search vulnerability checks</span>
+            <input id="matrixSearch" type="search" placeholder="Search checks">
+          </label>
+        </div>
+        <div class="matrix-grid" id="matrixGrid" aria-live="polite"></div>
       </section>
 
       <section class="content-band" id="blog" aria-labelledby="blogTitle">
