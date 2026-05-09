@@ -1,0 +1,33 @@
+name: Update security tool versions
+
+on:
+  schedule:
+    - cron: "19 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-tools:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Refresh tools data
+        run: node scripts/update-tools.mjs
+      - name: Commit updates
+        run: |
+          if git diff --quiet -- data/tools.json; then
+            echo "No version changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/tools.json
+            git commit -m "Update security tool versions"
+            git push
+          fi

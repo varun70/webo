@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A GitHub Pages-ready cybersecurity blog with Linux command demos and an updateable security tools tracker.">
+    <title>CyberSec Field Notes</title>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="CyberSec Field Notes home">
+        <span class="brand-mark" aria-hidden="true">CS</span>
+        <span>CyberSec Field Notes</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#blog">Blog</a>
+        <a href="#terminal">Terminal</a>
+        <a href="#tools">Tools</a>
+        <a href="#publish">Publish</a>
+      </nav>
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme">
+        <i data-lucide="moon"></i>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="heroTitle">
+        <img
+          class="hero-media"
+          src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80"
+          alt="Network server racks with active indicator lights"
+        >
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Defensive labs, field notes, and tool watch</p>
+          <h1 id="heroTitle">CyberSec Field Notes</h1>
+          <p class="hero-copy">
+            A practical security blog for writeups, Linux command practice, and a live-style tracker for the tools you use in audits, hardening, and application security.
+          </p>
+          <div class="hero-actions" aria-label="Hero actions">
+            <a class="button primary" href="#blog"><i data-lucide="book-open"></i><span>Read Posts</span></a>
+            <a class="button secondary" href="#terminal"><i data-lucide="terminal"></i><span>Open Terminal</span></a>
+          </div>
+          <dl class="metrics" aria-label="Site metrics">
+            <div>
+              <dt id="postCountMetric">0</dt>
+              <dd>Posts</dd>
+            </div>
+            <div>
+              <dt id="toolCountMetric">0</dt>
+              <dd>Tracked tools</dd>
+            </div>
+            <div>
+              <dt>Static</dt>
+              <dd>GitHub Pages</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="content-band" id="blog" aria-labelledby="blogTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Blog desk</p>
+            <h2 id="blogTitle">Latest Security Posts</h2>
+          </div>
+          <label class="search-box">
+            <i data-lucide="search"></i>
+            <span class="sr-only">Search posts</span>
+            <input id="postSearch" type="search" placeholder="Search posts">
+          </label>
+        </div>
+        <div class="filter-row" id="postFilters" aria-label="Post categories"></div>
+        <div class="blog-layout">
+          <div class="post-grid" id="postGrid" aria-live="polite"></div>
+          <article class="article-reader" id="articleReader" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section class="content-band terminal-band" id="terminal" aria-labelledby="terminalTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Linux lab</p>
+            <h2 id="terminalTitle">Command Terminal</h2>
+          </div>
+          <div class="terminal-controls">
+            <button class="icon-text-button" id="replayTerminal" type="button">
+              <i data-lucide="rotate-ccw"></i><span>Replay</span>
+            </button>
+            <button class="icon-text-button" id="copyCommand" type="button">
+              <i data-lucide="copy"></i><span>Copy</span>
+            </button>
+            <button class="icon-text-button" id="nextCommand" type="button">
+              <i data-lucide="skip-forward"></i><span>Next</span>
+            </button>
+          </div>
+        </div>
+        <div class="terminal-shell" role="region" aria-label="Linux command examples">
+          <div class="terminal-topbar" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="terminal-status">
+            <span id="terminalTopic">Baseline audit</span>
+            <span>authorized lab only</span>
+          </div>
+          <pre id="terminalOutput"></pre>
+        </div>
+        <div class="command-strip" id="commandStrip" aria-label="Command groups"></div>
+      </section>
+
+      <section class="content-band" id="tools" aria-labelledby="toolsTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Tool watch</p>
+            <h2 id="toolsTitle">Useful Security Tools</h2>
+            <p class="section-note" id="toolsCheckedAt">Version data loads from data/tools.json.</p>
+          </div>
+          <label class="search-box">
+            <i data-lucide="search"></i>
+            <span class="sr-only">Search tools</span>
+            <input id="toolSearch" type="search" placeholder="Search tools">
+          </label>
+        </div>
+        <div class="filter-row" id="toolFilters" aria-label="Tool categories"></div>
+        <div class="tool-grid" id="toolGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="content-band publish-band" id="publish" aria-labelledby="publishTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Repository workflow</p>
+            <h2 id="publishTitle">Publish and Update</h2>
+          </div>
+        </div>
+        <div class="workflow-grid">
+          <article class="workflow-item">
+            <span class="step-number">01</span>
+            <h3>Add posts</h3>
+            <p>Edit <code>data/posts.json</code>. New posts appear in the blog grid automatically.</p>
+          </article>
+          <article class="workflow-item">
+            <span class="step-number">02</span>
+            <h3>Refresh tools</h3>
+            <p>Run <code>node scripts/update-tools.mjs</code> or use the included weekly GitHub Action.</p>
+          </article>
+          <article class="workflow-item">
+            <span class="step-number">03</span>
+            <h3>Deploy</h3>
+            <p>Push to GitHub and enable Pages with the included static deployment workflow.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Built for ethical security learning, owned systems, and documented defensive practice.</p>
+      <a href="#top">Back to top</a>
+    </footer>
+  </body>
+</html>

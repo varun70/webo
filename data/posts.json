@@ -1,0 +1,75 @@
+[
+  {
+    "id": "ubuntu-hardening",
+    "title": "Hardening a Fresh Ubuntu Server",
+    "category": "Hardening",
+    "date": "2026-05-09",
+    "readTime": "6 min",
+    "excerpt": "A compact baseline for patching, firewall rules, SSH hygiene, logs, and package inventory.",
+    "body": [
+      "Start every server build with a repeatable baseline. Update packages, remove services you do not need, and keep a note of what changed.",
+      "Use firewall defaults before opening ports. SSH should prefer keys, limited users, and clear logging so suspicious access attempts are visible early.",
+      "Finish by taking a package inventory and recording the commands in the ticket or change log."
+    ],
+    "commands": [
+      "sudo apt update && sudo apt full-upgrade",
+      "sudo ufw default deny incoming && sudo ufw allow OpenSSH && sudo ufw enable",
+      "sudo journalctl -u ssh --since today"
+    ]
+  },
+  {
+    "id": "linux-log-review",
+    "title": "Reading Linux Logs Like a Defender",
+    "category": "Detection",
+    "date": "2026-05-08",
+    "readTime": "5 min",
+    "excerpt": "A simple workflow for finding warning patterns in systemd, auth, kernel, and web service logs.",
+    "body": [
+      "Good log review starts with a small question. Look for failed authentications, new services, privilege changes, and unexpected network listeners.",
+      "Keep the first pass narrow. Pull warnings from the last hour, expand the time window only when the first signal looks meaningful, and compare with known maintenance windows.",
+      "Turn useful searches into saved snippets so the same review can be repeated by another analyst."
+    ],
+    "commands": [
+      "sudo journalctl -p warning --since \"1 hour ago\"",
+      "sudo journalctl -u ssh --since today",
+      "sudo ausearch -m USER_LOGIN,USER_AUTH --start today"
+    ]
+  },
+  {
+    "id": "appsec-scan-checklist",
+    "title": "Building an AppSec Scan Checklist",
+    "category": "AppSec",
+    "date": "2026-05-06",
+    "readTime": "7 min",
+    "excerpt": "Combine dependency, secret, static analysis, and dynamic checks before every public release.",
+    "body": [
+      "An AppSec checklist works best when it is boring, consistent, and attached to the release workflow. Start with dependency and secret checks because they are fast and easy to automate.",
+      "Add static analysis for code patterns and container scanning for runtime images. Dynamic testing belongs in a controlled staging environment with written authorization.",
+      "Keep every finding tied to an owner, a fix version, and a retest note."
+    ],
+    "commands": [
+      "gitleaks detect --source . --redact",
+      "semgrep scan --config auto",
+      "trivy fs --scanners vuln,secret ."
+    ]
+  },
+  {
+    "id": "incident-triage-first-hour",
+    "title": "Incident Triage in the First Hour",
+    "category": "Incident Response",
+    "date": "2026-05-03",
+    "readTime": "8 min",
+    "excerpt": "A calm first-hour routine for scoping, preserving evidence, and deciding what must be contained.",
+    "body": [
+      "The first hour is about clarity, not heroics. Preserve volatile evidence, write down who noticed what, and identify the business systems that may be affected.",
+      "Separate facts from guesses. Track timestamps in one place and keep containment actions small enough to explain later.",
+      "When evidence points to active compromise, prioritize account control, exposed service reduction, and forensic capture before broad rebuild work."
+    ],
+    "commands": [
+      "date -u",
+      "who -a",
+      "sudo ss -tulpn",
+      "sudo ps aux --sort=-%cpu | head"
+    ]
+  }
+]
