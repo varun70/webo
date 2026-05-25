@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-05-18T07:06:36.147Z",
+  "checkedAt": "2026-05-25T07:58:47.760Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -154,8 +154,8 @@
     {
       "name": "Suricata",
       "category": "Network Defense",
-      "version": "8.0.4",
-      "publishedAt": "2026-03-17T14:41:36Z",
+      "version": "8.0.5",
+      "publishedAt": "2026-05-19T16:53:24Z",
       "summary": "Network IDS, IPS, and monitoring engine for packet capture review and production sensors.",
       "install": "sudo suricata -r capture.pcap -k none",
       "source": {
@@ -163,7 +163,7 @@
         "repo": "OISF/suricata",
         "stripPrefix": "suricata-",
         "url": "https://github.com/OISF/suricata",
-        "releaseUrl": "https://github.com/OISF/suricata/releases/tag/suricata-8.0.4"
+        "releaseUrl": "https://github.com/OISF/suricata/releases/tag/suricata-8.0.5"
       }
     },
     {
