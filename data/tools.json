@@ -1,11 +1,11 @@
 {
-  "checkedAt": "2026-06-08T08:23:02.423Z",
+  "checkedAt": "2026-06-15T09:35:16.644Z",
   "tools": [
     {
       "name": "Nuclei",
       "category": "AppSec",
-      "version": "3.8.0",
-      "publishedAt": "2026-04-18T01:47:59Z",
+      "version": "3.9.0",
+      "publishedAt": "2026-06-10T10:17:31Z",
       "summary": "Template-based scanner for authorized vulnerability checks across web, cloud, DNS, and network targets.",
       "install": "go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest",
       "source": {
@@ -13,14 +13,14 @@
         "repo": "projectdiscovery/nuclei",
         "stripPrefix": "v",
         "url": "https://github.com/projectdiscovery/nuclei",
-        "releaseUrl": "https://github.com/projectdiscovery/nuclei/releases/tag/v3.8.0"
+        "releaseUrl": "https://github.com/projectdiscovery/nuclei/releases/tag/v3.9.0"
       }
     },
     {
       "name": "Trivy",
       "category": "Vulnerability Management",
-      "version": "0.71.0",
-      "publishedAt": "2026-06-01T13:49:26Z",
+      "version": "0.71.1",
+      "publishedAt": "2026-06-15T09:12:47Z",
       "summary": "Scans source folders, containers, images, IaC, SBOMs, and secrets for defensive review.",
       "install": "docker run --rm -v \"$PWD:/work\" aquasec/trivy fs /work",
       "source": {
@@ -28,7 +28,7 @@
         "repo": "aquasecurity/trivy",
         "stripPrefix": "v",
         "url": "https://github.com/aquasecurity/trivy",
-        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.71.0"
+        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.71.1"
       }
     },
     {
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.165.0",
-      "publishedAt": "2026-06-03T22:02:47Z",
+      "version": "1.166.0",
+      "publishedAt": "2026-06-11T14:00:10Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.165.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.166.0"
       }
     },
     {
