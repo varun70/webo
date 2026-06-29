@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-06-22T09:23:11.623Z",
+  "checkedAt": "2026-06-29T08:26:12.406Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.167.0",
-      "publishedAt": "2026-06-17T18:21:17Z",
+      "version": "1.168.0",
+      "publishedAt": "2026-06-24T19:37:09Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.167.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.168.0"
       }
     },
     {
@@ -109,8 +109,8 @@
     {
       "name": "Lynis",
       "category": "Hardening",
-      "version": "3.1.6",
-      "publishedAt": "2025-10-23T12:02:38Z",
+      "version": "3.1.7",
+      "publishedAt": "2026-06-25T08:55:17Z",
       "summary": "Unix and Linux security auditing tool for system hardening checks and compliance baselines.",
       "install": "sudo lynis audit system",
       "source": {
@@ -118,7 +118,7 @@
         "repo": "CISOfy/lynis",
         "stripPrefix": "",
         "url": "https://github.com/CISOfy/lynis",
-        "releaseUrl": "https://github.com/CISOfy/lynis/releases/tag/3.1.6"
+        "releaseUrl": "https://github.com/CISOfy/lynis/releases/tag/3.1.7"
       }
     },
     {
