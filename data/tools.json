@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-07-13T06:31:02.987Z",
+  "checkedAt": "2026-07-20T06:26:33.752Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.169.0",
-      "publishedAt": "2026-07-08T22:47:29Z",
+      "version": "1.170.0",
+      "publishedAt": "2026-07-15T17:02:36Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.169.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.170.0"
       }
     },
     {
@@ -139,8 +139,8 @@
     {
       "name": "ffuf",
       "category": "Web Testing",
-      "version": "2.2.0",
-      "publishedAt": "2026-07-11T13:05:14Z",
+      "version": "2.2.1",
+      "publishedAt": "2026-07-13T16:15:53Z",
       "summary": "Fast web fuzzer useful for authorized local labs, QA environments, and content discovery checks.",
       "install": "ffuf -w wordlist.txt -u http://127.0.0.1/FUZZ",
       "source": {
@@ -148,7 +148,7 @@
         "repo": "ffuf/ffuf",
         "stripPrefix": "v",
         "url": "https://github.com/ffuf/ffuf",
-        "releaseUrl": "https://github.com/ffuf/ffuf/releases/tag/v2.2.0"
+        "releaseUrl": "https://github.com/ffuf/ffuf/releases/tag/v2.2.1"
       }
     },
     {
