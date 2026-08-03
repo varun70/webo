@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-07-27T06:43:08.228Z",
+  "checkedAt": "2026-08-03T06:37:00.343Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.171.0",
-      "publishedAt": "2026-07-22T23:05:43Z",
+      "version": "1.172.0",
+      "publishedAt": "2026-07-28T22:40:28Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.171.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.172.0"
       }
     },
     {
@@ -94,8 +94,8 @@
     {
       "name": "YARA",
       "category": "Malware Analysis",
-      "version": "4.5.5",
-      "publishedAt": "2025-10-30T10:49:30Z",
+      "version": "4.5.8",
+      "publishedAt": "2026-07-28T07:12:15Z",
       "summary": "Pattern matching engine for identifying and classifying malware samples in controlled analysis environments.",
       "install": "yara -r rules.yar samples/",
       "source": {
@@ -103,7 +103,7 @@
         "repo": "VirusTotal/yara",
         "stripPrefix": "v",
         "url": "https://github.com/VirusTotal/yara",
-        "releaseUrl": "https://github.com/VirusTotal/yara/releases/tag/v4.5.5"
+        "releaseUrl": "https://github.com/VirusTotal/yara/releases/tag/v4.5.8"
       }
     },
     {
@@ -169,8 +169,8 @@
     {
       "name": "Wazuh",
       "category": "Detection",
-      "version": "4.14.6",
-      "publishedAt": "2026-07-03T08:50:24Z",
+      "version": "4.14.7",
+      "publishedAt": "2026-07-30T16:32:45Z",
       "summary": "Security monitoring platform for endpoint telemetry, file integrity monitoring, alerts, and compliance checks.",
       "install": "systemctl status wazuh-agent",
       "source": {
@@ -178,7 +178,7 @@
         "repo": "wazuh/wazuh",
         "stripPrefix": "v",
         "url": "https://github.com/wazuh/wazuh",
-        "releaseUrl": "https://github.com/wazuh/wazuh/releases/tag/v4.14.6"
+        "releaseUrl": "https://github.com/wazuh/wazuh/releases/tag/v4.14.7"
       }
     },
     {
@@ -214,8 +214,8 @@
     {
       "name": "Nikto",
       "category": "Web Testing",
-      "version": "2.6.0",
-      "publishedAt": "2026-02-11T22:01:29Z",
+      "version": "2.6.1",
+      "publishedAt": "2026-07-31T16:17:55Z",
       "summary": "Web server checks for known risky files, configuration issues, and outdated server components in authorized assessments.",
       "install": "nikto -h https://target.example -output nikto.txt",
       "source": {
@@ -223,7 +223,7 @@
         "repo": "sullo/nikto",
         "stripPrefix": "",
         "url": "https://github.com/sullo/nikto",
-        "releaseUrl": "https://github.com/sullo/nikto/releases/tag/2.6.0"
+        "releaseUrl": "https://github.com/sullo/nikto/releases/tag/2.6.1"
       }
     },
     {
