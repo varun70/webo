@@ -1,11 +1,11 @@
 {
-  "checkedAt": "2026-08-03T06:37:00.343Z",
+  "checkedAt": "2026-08-10T04:55:17.945Z",
   "tools": [
     {
       "name": "Nuclei",
       "category": "AppSec",
-      "version": "3.11.0",
-      "publishedAt": "2026-07-06T07:00:13Z",
+      "version": "3.11.1",
+      "publishedAt": "2026-08-08T12:21:32Z",
       "summary": "Template-based scanner for authorized vulnerability checks across web, cloud, DNS, and network targets.",
       "install": "go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest",
       "source": {
@@ -13,14 +13,14 @@
         "repo": "projectdiscovery/nuclei",
         "stripPrefix": "v",
         "url": "https://github.com/projectdiscovery/nuclei",
-        "releaseUrl": "https://github.com/projectdiscovery/nuclei/releases/tag/v3.11.0"
+        "releaseUrl": "https://github.com/projectdiscovery/nuclei/releases/tag/v3.11.1"
       }
     },
     {
       "name": "Trivy",
       "category": "Vulnerability Management",
-      "version": "0.72.0",
-      "publishedAt": "2026-06-30T09:34:06Z",
+      "version": "0.73.0",
+      "publishedAt": "2026-08-03T10:47:14Z",
       "summary": "Scans source folders, containers, images, IaC, SBOMs, and secrets for defensive review.",
       "install": "docker run --rm -v \"$PWD:/work\" aquasec/trivy fs /work",
       "source": {
@@ -28,7 +28,7 @@
         "repo": "aquasecurity/trivy",
         "stripPrefix": "v",
         "url": "https://github.com/aquasecurity/trivy",
-        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.72.0"
+        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.73.0"
       }
     },
     {
@@ -79,8 +79,8 @@
     {
       "name": "OSV-Scanner",
       "category": "Vulnerability Management",
-      "version": "2.4.0",
-      "publishedAt": "2026-06-18T13:35:18Z",
+      "version": "2.5.0",
+      "publishedAt": "2026-08-07T05:23:52Z",
       "summary": "Checks dependencies against the OSV vulnerability database for many language ecosystems.",
       "install": "osv-scanner scan source -r .",
       "source": {
@@ -88,7 +88,7 @@
         "repo": "google/osv-scanner",
         "stripPrefix": "v",
         "url": "https://github.com/google/osv-scanner",
-        "releaseUrl": "https://github.com/google/osv-scanner/releases/tag/v2.4.0"
+        "releaseUrl": "https://github.com/google/osv-scanner/releases/tag/v2.5.0"
       }
     },
     {
@@ -229,8 +229,8 @@
     {
       "name": "Katana",
       "category": "Web Testing",
-      "version": "1.6.1",
-      "publishedAt": "2026-05-05T15:31:34Z",
+      "version": "1.7.0",
+      "publishedAt": "2026-08-05T15:43:30Z",
       "summary": "Crawler for mapping URLs, forms, JavaScript links, and web app routes during approved reconnaissance.",
       "install": "katana -u https://target.example -d 2 -o katana.txt",
       "source": {
@@ -238,7 +238,7 @@
         "repo": "projectdiscovery/katana",
         "stripPrefix": "v",
         "url": "https://github.com/projectdiscovery/katana",
-        "releaseUrl": "https://github.com/projectdiscovery/katana/releases/tag/v1.6.1"
+        "releaseUrl": "https://github.com/projectdiscovery/katana/releases/tag/v1.7.0"
       }
     }
   ]
