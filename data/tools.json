@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-08-10T04:55:17.945Z",
+  "checkedAt": "2026-08-17T04:03:58.348Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -19,8 +19,8 @@
     {
       "name": "Trivy",
       "category": "Vulnerability Management",
-      "version": "0.73.0",
-      "publishedAt": "2026-08-03T10:47:14Z",
+      "version": "0.74.0",
+      "publishedAt": "2026-08-14T11:29:11Z",
       "summary": "Scans source folders, containers, images, IaC, SBOMs, and secrets for defensive review.",
       "install": "docker run --rm -v \"$PWD:/work\" aquasec/trivy fs /work",
       "source": {
@@ -28,7 +28,7 @@
         "repo": "aquasecurity/trivy",
         "stripPrefix": "v",
         "url": "https://github.com/aquasecurity/trivy",
-        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.73.0"
+        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.74.0"
       }
     },
     {
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.172.0",
-      "publishedAt": "2026-07-28T22:40:28Z",
+      "version": "1.173.0",
+      "publishedAt": "2026-08-13T16:49:55Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.172.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.173.0"
       }
     },
     {
