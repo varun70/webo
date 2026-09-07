@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-08-31T09:48:24.338Z",
+  "checkedAt": "2026-09-07T08:21:43.062Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.175.0",
-      "publishedAt": "2026-08-26T17:08:58Z",
+      "version": "1.176.0",
+      "publishedAt": "2026-09-01T19:52:12Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.175.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.176.0"
       }
     },
     {
