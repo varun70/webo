@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-21T09:00:09.785Z",
+  "checkedAt": "2026-09-28T09:51:19.399Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.177.0",
-      "publishedAt": "2026-09-10T19:37:56Z",
+      "version": "1.178.0",
+      "publishedAt": "2026-09-23T21:05:39Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.177.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.178.0"
       }
     },
     {
@@ -169,8 +169,8 @@
     {
       "name": "Wazuh",
       "category": "Detection",
-      "version": "4.14.7",
-      "publishedAt": "2026-07-30T16:32:45Z",
+      "version": "4.14.8",
+      "publishedAt": "2026-09-25T18:19:40Z",
       "summary": "Security monitoring platform for endpoint telemetry, file integrity monitoring, alerts, and compliance checks.",
       "install": "systemctl status wazuh-agent",
       "source": {
@@ -178,7 +178,7 @@
         "repo": "wazuh/wazuh",
         "stripPrefix": "v",
         "url": "https://github.com/wazuh/wazuh",
-        "releaseUrl": "https://github.com/wazuh/wazuh/releases/tag/v4.14.7"
+        "releaseUrl": "https://github.com/wazuh/wazuh/releases/tag/v4.14.8"
       }
     },
     {
