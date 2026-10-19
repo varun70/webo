@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-12T10:55:20.031Z",
+  "checkedAt": "2026-10-19T08:56:48.577Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -19,8 +19,8 @@
     {
       "name": "Trivy",
       "category": "Vulnerability Management",
-      "version": "0.75.0",
-      "publishedAt": "2026-10-01T13:34:13Z",
+      "version": "0.76.0",
+      "publishedAt": "2026-10-14T11:45:44Z",
       "summary": "Scans source folders, containers, images, IaC, SBOMs, and secrets for defensive review.",
       "install": "docker run --rm -v \"$PWD:/work\" aquasec/trivy fs /work",
       "source": {
@@ -28,7 +28,7 @@
         "repo": "aquasecurity/trivy",
         "stripPrefix": "v",
         "url": "https://github.com/aquasecurity/trivy",
-        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.75.0"
+        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.76.0"
       }
     },
     {
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.180.0",
-      "publishedAt": "2026-10-07T23:17:11Z",
+      "version": "1.181.0",
+      "publishedAt": "2026-10-14T21:26:24Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.180.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.181.0"
       }
     },
     {
@@ -169,8 +169,8 @@
     {
       "name": "Wazuh",
       "category": "Detection",
-      "version": "4.14.8",
-      "publishedAt": "2026-09-25T18:19:40Z",
+      "version": "4.14.9",
+      "publishedAt": "2026-10-15T17:40:40Z",
       "summary": "Security monitoring platform for endpoint telemetry, file integrity monitoring, alerts, and compliance checks.",
       "install": "systemctl status wazuh-agent",
       "source": {
@@ -178,7 +178,7 @@
         "repo": "wazuh/wazuh",
         "stripPrefix": "v",
         "url": "https://github.com/wazuh/wazuh",
-        "releaseUrl": "https://github.com/wazuh/wazuh/releases/tag/v4.14.8"
+        "releaseUrl": "https://github.com/wazuh/wazuh/releases/tag/v4.14.9"
       }
     },
     {
