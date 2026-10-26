@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-19T08:56:48.577Z",
+  "checkedAt": "2026-10-26T08:59:45.311Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -19,8 +19,8 @@
     {
       "name": "Trivy",
       "category": "Vulnerability Management",
-      "version": "0.76.0",
-      "publishedAt": "2026-10-14T11:45:44Z",
+      "version": "0.76.1",
+      "publishedAt": "2026-10-21T11:18:34Z",
       "summary": "Scans source folders, containers, images, IaC, SBOMs, and secrets for defensive review.",
       "install": "docker run --rm -v \"$PWD:/work\" aquasec/trivy fs /work",
       "source": {
@@ -28,7 +28,7 @@
         "repo": "aquasecurity/trivy",
         "stripPrefix": "v",
         "url": "https://github.com/aquasecurity/trivy",
-        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.76.0"
+        "releaseUrl": "https://github.com/aquasecurity/trivy/releases/tag/v0.76.1"
       }
     },
     {
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.181.0",
-      "publishedAt": "2026-10-14T21:26:24Z",
+      "version": "1.182.0",
+      "publishedAt": "2026-10-20T20:27:41Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.181.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.182.0"
       }
     },
     {
@@ -124,8 +124,8 @@
     {
       "name": "Hashcat",
       "category": "Password Audit",
-      "version": "7.1.2",
-      "publishedAt": "2025-08-23T08:49:12Z",
+      "version": "8.0.0",
+      "publishedAt": "2026-10-25T20:09:20Z",
       "summary": "Password recovery and audit tool for owned hash sets and controlled security assessments.",
       "install": "hashcat --benchmark",
       "source": {
@@ -133,7 +133,7 @@
         "repo": "hashcat/hashcat",
         "stripPrefix": "v",
         "url": "https://github.com/hashcat/hashcat",
-        "releaseUrl": "https://github.com/hashcat/hashcat/releases/tag/v7.1.2"
+        "releaseUrl": "https://github.com/hashcat/hashcat/releases/tag/v8.0.0"
       }
     },
     {
@@ -199,8 +199,8 @@
     {
       "name": "Amass",
       "category": "Asset Discovery",
-      "version": "5.1.1",
-      "publishedAt": "2026-04-07T02:08:08Z",
+      "version": "5.1.3",
+      "publishedAt": "2026-10-25T16:20:12Z",
       "summary": "Attack surface mapping and DNS enumeration framework for approved domains and asset inventories.",
       "install": "amass enum -passive -d example.com -o amass.txt",
       "source": {
@@ -208,7 +208,7 @@
         "repo": "owasp-amass/amass",
         "stripPrefix": "v",
         "url": "https://github.com/owasp-amass/amass",
-        "releaseUrl": "https://github.com/owasp-amass/amass/releases/tag/v5.1.1"
+        "releaseUrl": "https://github.com/owasp-amass/amass/releases/tag/v5.1.3"
       }
     },
     {
