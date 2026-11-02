@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-26T08:59:45.311Z",
+  "checkedAt": "2026-11-02T11:14:22.866Z",
   "tools": [
     {
       "name": "Nuclei",
@@ -64,8 +64,8 @@
     {
       "name": "Semgrep",
       "category": "Code Review",
-      "version": "1.182.0",
-      "publishedAt": "2026-10-20T20:27:41Z",
+      "version": "1.183.0",
+      "publishedAt": "2026-10-29T21:29:24Z",
       "summary": "Static analysis for finding insecure patterns, dependency issues, and custom policy violations.",
       "install": "semgrep scan --config auto",
       "source": {
@@ -73,7 +73,7 @@
         "repo": "semgrep/semgrep",
         "stripPrefix": "v",
         "url": "https://github.com/semgrep/semgrep",
-        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.182.0"
+        "releaseUrl": "https://github.com/semgrep/semgrep/releases/tag/v1.183.0"
       }
     },
     {
@@ -94,8 +94,8 @@
     {
       "name": "YARA",
       "category": "Malware Analysis",
-      "version": "4.5.8",
-      "publishedAt": "2026-07-28T07:12:15Z",
+      "version": "4.6.0",
+      "publishedAt": "2026-10-27T12:10:10Z",
       "summary": "Pattern matching engine for identifying and classifying malware samples in controlled analysis environments.",
       "install": "yara -r rules.yar samples/",
       "source": {
@@ -103,7 +103,7 @@
         "repo": "VirusTotal/yara",
         "stripPrefix": "v",
         "url": "https://github.com/VirusTotal/yara",
-        "releaseUrl": "https://github.com/VirusTotal/yara/releases/tag/v4.5.8"
+        "releaseUrl": "https://github.com/VirusTotal/yara/releases/tag/v4.6.0"
       }
     },
     {
@@ -154,8 +154,8 @@
     {
       "name": "Suricata",
       "category": "Network Defense",
-      "version": "8.0.7",
-      "publishedAt": "2026-09-15T13:22:14Z",
+      "version": "8.0.8",
+      "publishedAt": "2026-10-29T21:12:24Z",
       "summary": "Network IDS, IPS, and monitoring engine for packet capture review and production sensors.",
       "install": "sudo suricata -r capture.pcap -k none",
       "source": {
@@ -163,7 +163,7 @@
         "repo": "OISF/suricata",
         "stripPrefix": "suricata-",
         "url": "https://github.com/OISF/suricata",
-        "releaseUrl": "https://github.com/OISF/suricata/releases/tag/suricata-8.0.7"
+        "releaseUrl": "https://github.com/OISF/suricata/releases/tag/suricata-8.0.8"
       }
     },
     {
